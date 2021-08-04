@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_cinema_schedule_project" default="compile.module.cinema_schedule_project">
+  <dirname property="module.cinema_schedule_project.basedir" file="${ant.file.module_cinema_schedule_project}"/>
+  
+  <property name="module.jdk.home.cinema_schedule_project" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.cinema_schedule_project" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.cinema_schedule_project" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.cinema_schedule_project" value="-encoding UTF-8 -source 13 -target 13 ${compiler.args}"/>
+  
+  <property name="cinema_schedule_project.output.dir" value="${module.cinema_schedule_project.basedir}/out/production/cinema schedule project"/>
+  <property name="cinema_schedule_project.testoutput.dir" value="${module.cinema_schedule_project.basedir}/out/test/cinema schedule project"/>
+  
+  <path id="cinema_schedule_project.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="cinema_schedule_project.module.production.classpath">
+    <path refid="${module.jdk.classpath.cinema_schedule_project}"/>
+    <path refid="library.mysql-connector-java-5.0.8-bin.classpath"/>
+    <path refid="library.mysql-connector-java-8.0.19.classpath"/>
+  </path>
+  
+  <path id="cinema_schedule_project.runtime.production.module.classpath">
+    <pathelement location="${cinema_schedule_project.output.dir}"/>
+    <path refid="library.mysql-connector-java-5.0.8-bin.classpath"/>
+    <path refid="library.mysql-connector-java-8.0.19.classpath"/>
+  </path>
+  
+  <path id="cinema_schedule_project.module.classpath">
+    <path refid="${module.jdk.classpath.cinema_schedule_project}"/>
+    <pathelement location="${cinema_schedule_project.output.dir}"/>
+    <path refid="library.mysql-connector-java-5.0.8-bin.classpath"/>
+    <path refid="library.mysql-connector-java-8.0.19.classpath"/>
+  </path>
+  
+  <path id="cinema_schedule_project.runtime.module.classpath">
+    <pathelement location="${cinema_schedule_project.testoutput.dir}"/>
+    <pathelement location="${cinema_schedule_project.output.dir}"/>
+    <path refid="library.mysql-connector-java-5.0.8-bin.classpath"/>
+    <path refid="library.mysql-connector-java-8.0.19.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.cinema_schedule_project">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.cinema_schedule_project">
+    <patternset refid="excluded.from.module.cinema_schedule_project"/>
+  </patternset>
+  
+  <path id="cinema_schedule_project.module.sourcepath">
+    <dirset dir="${module.cinema_schedule_project.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.cinema_schedule_project" depends="compile.module.cinema_schedule_project.production,compile.module.cinema_schedule_project.tests" description="Compile module cinema schedule project"/>
+  
+  <target name="compile.module.cinema_schedule_project.production" depends="register.custom.compilers" description="Compile module cinema schedule project; production classes">
+    <mkdir dir="${cinema_schedule_project.output.dir}"/>
+    <javac2 destdir="${cinema_schedule_project.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.cinema_schedule_project}/javac">
+      <compilerarg line="${compiler.args.cinema_schedule_project}"/>
+      <bootclasspath refid="cinema_schedule_project.module.bootclasspath"/>
+      <classpath refid="cinema_schedule_project.module.production.classpath"/>
+      <src refid="cinema_schedule_project.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.cinema_schedule_project"/>
+    </javac2>
+    
+    <copy todir="${cinema_schedule_project.output.dir}">
+      <fileset dir="${module.cinema_schedule_project.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.cinema_schedule_project.tests" depends="register.custom.compilers,compile.module.cinema_schedule_project.production" description="compile module cinema schedule project; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.cinema_schedule_project" description="cleanup module">
+    <delete dir="${cinema_schedule_project.output.dir}"/>
+    <delete dir="${cinema_schedule_project.testoutput.dir}"/>
+  </target>
+</project>
